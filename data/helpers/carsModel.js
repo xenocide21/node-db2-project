@@ -3,30 +3,26 @@ const mappers = require("./mappers");
 
 module.exports = {
     get,
-    getById,
     insert,
     update,
     remove,
     getCarInfo: getCarInfo,
 };
-function get() {
-    return db('cars');
-}
-function getById(id) {
+function get(id) {
     let query = db("cars as c");
 
     if (id) {
         query.where("c.id", id).first();
 
-        const promises = [query, this.getCarInfo(id)]; // [ car, cars ]
+        const promises = [query, this.getCarInfo(id)]; // [ cars, car ]
 
         return Promise.all(promises).then(function(results) {
-            let [car, cars] = results;
+            let [cars, car] = results;
 
-            if (car) {
-                car.cars = cars;
+            if (cars) {
+                cars.car = car;
 
-                return mappers.carsToBody(car);
+                return mappers.carsToBody(cars);
             } else {
                 return null;
             }
@@ -59,6 +55,6 @@ function remove(id) {
 
 function getCarInfo(carId) {
     return db("car")
-        .where("car_id", carId)
+        .where("cars_id", carId)
         .then(car => car.map(c => mappers.carToBody(c)));
 }

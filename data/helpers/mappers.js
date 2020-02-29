@@ -1,28 +1,27 @@
 module.exports = {
     intToBoolean,
-    booleanToint,
+    booleanToInt,
     carsToBody,
     carToBody,
 };
 
 function intToBoolean(int) {
-    return int === 1 ? true : false;
+    return int === 1;
 }
 
-function booleanToint(bool) {
+function booleanToInt(bool) {
     return bool === true ? 1 : 0;
 }
 
-function carsToBody(car) {
+function carsToBody(cars) {
     const result = {
-        ...car,
-        completed: intToBoolean(car.completed),
+        ...cars,
+        Inspected: intToBoolean(cars.Inspected),
     };
 
-    if (car.cars) {
-        result.cars = car.cars.map(c => ({
+    if (cars.car) {
+        result.car = cars.car.map(c => ({
             ...c,
-            completed: intToBoolean(c.completed),
         }));
     }
 
@@ -32,6 +31,5 @@ function carsToBody(car) {
 function carToBody(car) {
     return {
         ...car,
-        completed: intToBoolean(car.completed),
     };
 }

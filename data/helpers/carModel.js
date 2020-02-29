@@ -4,16 +4,11 @@ const mappers = require("./mappers");
 
 module.exports = {
     get,
-    getById,
     insert,
     update,
     remove,
 };
-function get(){
-    return db('car')
-}
-
-function getById(id) {
+function get(id) {
     let query = db("car");
 
     if (id) {
